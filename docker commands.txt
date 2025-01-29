@@ -1,0 +1,9 @@
+https://confluence.dev.rabobank.nl/pages/viewpage.action?pageId=266314088
+
+run the docker to
+docker run -it -d --name mysql-container -p 3306:3306 --network techbankNet -e MYSQL_ROOT_PASSWORD=techbankRootPsw --restart always -v mysql_data_container:/var/lib/mysql mysql:latest
+
+command to connect mysql
+mysqlsh --uri user@localhost:3306 --user root mysqlsh --uri user@localhost:3306 --user root
+
+password; techbankRootPsw
