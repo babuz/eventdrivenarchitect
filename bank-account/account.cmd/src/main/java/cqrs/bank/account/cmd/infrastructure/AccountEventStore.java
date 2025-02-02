@@ -21,6 +21,11 @@ public class AccountEventStore implements EventStore {
     @Autowired
     private EventStoreRepository eventStoreRepository;
 
+    @Autowired
+    private AccountEventProducer eventProducer;
+    @Autowired
+    private AccountEventProducer accountEventProducer;
+
     @Override
     public void saveEvents(String aggregateId, Iterable<BaseEvent> events, int expectedVersion) {
         var existingEvents = eventStoreRepository.findByAggregateIdentifier(aggregateId);
@@ -40,14 +45,14 @@ public class AccountEventStore implements EventStore {
                     .aggregateIdentifier(aggregateId)
                     .aggregateType(AccountAggregate.class.getTypeName())
                     .build();
+
             EventModel persistedEvent = eventStoreRepository.save(eventModel);
-            if (persistedEvent != null) {
+
+            if (!persistedEvent.getId().isEmpty()) {
                 log.info("logging the event to Kafka {}", persistedEvent);
-                //TODO: publish the event to kafka store the event
+                accountEventProducer.produce(event.getClass().getSimpleName(), event);
             }
-
         }
-
     }
 
     @Override

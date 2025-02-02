@@ -6,6 +6,7 @@ import cqrs.bank.account.common.events.AccountOpenedEvent;
 import cqrs.bank.account.common.events.FundDepositedEvent;
 import cqrs.bank.account.common.events.FundWithdrawEvent;
 import cqrs.bank.cqrs.core.domain.AggregateRoot;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
@@ -13,6 +14,7 @@ import java.util.Date;
 @NoArgsConstructor
 public class AccountAggregate extends AggregateRoot {
     private boolean active;
+    @Getter
     private double balance;
 
     public AccountAggregate(OpenAccountCommand openAccountCommand) {
@@ -46,6 +48,7 @@ public class AccountAggregate extends AggregateRoot {
                 .build());
     }
 
+    //apply for eachEvent
     public void apply(FundDepositedEvent event) {
         this.id = event.getId();
         this.balance += event.getAmount();
