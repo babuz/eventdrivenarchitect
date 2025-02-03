@@ -1,4 +1,9 @@
 package cqrs.bank.cqrs.core.handlers;
 
-public interface EventSourceHandlers {
+import cqrs.bank.cqrs.core.domain.AggregateRoot;
+
+public interface EventSourcingHandlers<T> {
+    void save(AggregateRoot aggregate);
+    T getById(String id);
+
 }

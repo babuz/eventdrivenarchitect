@@ -1,6 +1,7 @@
 package cqrs.bank.cqrs.core.domain;
 
 import cqrs.bank.cqrs.core.events.BaseEvent;
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -10,12 +11,9 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+@Data
 public class AggregateRoot {
-    @Getter
     protected String id;
-
-    @Getter
-    @Setter
     private int version = -1;
     private final List<BaseEvent> changes = new ArrayList<>();
 

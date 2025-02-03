@@ -22,14 +22,12 @@ public class AccountEventStore implements EventStore {
     private EventStoreRepository eventStoreRepository;
 
     @Autowired
-    private AccountEventProducer eventProducer;
-    @Autowired
     private AccountEventProducer accountEventProducer;
 
     @Override
     public void saveEvents(String aggregateId, Iterable<BaseEvent> events, int expectedVersion) {
         var existingEvents = eventStoreRepository.findByAggregateIdentifier(aggregateId);
-        if (expectedVersion != -1 && existingEvents.getLast().getVersion() != expectedVersion) {
+        if (expectedVersion != -1 && existingEvents.get(existingEvents.size() - 1).getVersion() != expectedVersion) {
             log.error("expected version {} is not -1 for the aggregateId {}", expectedVersion, aggregateId);
             throw new ConcurrencyException(" expected version is correct, concurrency exception" + expectedVersion);
         }
