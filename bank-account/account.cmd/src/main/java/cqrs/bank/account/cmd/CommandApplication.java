@@ -6,6 +6,7 @@ import cqrs.bank.account.cmd.api.commands.DepositFundCommand;
 import cqrs.bank.account.cmd.api.commands.OpenAccountCommand;
 import cqrs.bank.account.cmd.api.commands.WithdrawFundCommand;
 import cqrs.bank.cqrs.core.infrastructure.CommandDispatcher;
+import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -23,6 +24,7 @@ public class CommandApplication {
 		SpringApplication.run(CommandApplication.class, args);
 	}
 
+	@PostConstruct
 	void  registerHandler(){
 		commandDispatcher.registerHandler( OpenAccountCommand.class, commandHandler::handle);
 		commandDispatcher.registerHandler( CloseAccountCommand.class, commandHandler::handle);
