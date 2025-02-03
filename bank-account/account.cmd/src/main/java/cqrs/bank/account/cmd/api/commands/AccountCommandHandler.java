@@ -14,6 +14,7 @@ public class AccountCommandHandler implements CommandHandler {
     @Override
     public void handle(OpenAccountCommand command) {
         var aggregate = new AccountAggregate(command);
+        aggregate.setId(command.getId());
         eventSourcingHandler.save(aggregate);
 
     }
@@ -28,12 +29,11 @@ public class AccountCommandHandler implements CommandHandler {
     @Override
     public void handle(DepositFundCommand command) {
         var aggregate = eventSourcingHandler.getById(command.getId());
-        if (command.getAmount() > aggregate.getBalance()) {
-            throw new IllegalStateException(" withdraw amount is greater than balance amount");
+        if (command.getAmount() <= 0) {
+            throw new IllegalStateException(" deposit amount should be greater than 0");
         }
         aggregate.depositFund(command.getAmount());
         eventSourcingHandler.save(aggregate);
-
     }
 
     @Override
