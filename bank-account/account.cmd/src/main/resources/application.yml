@@ -7,8 +7,8 @@ spring:
       host: 127.0.0.1
       port: 27017
       database: bankAccount
-      username: admin
-      password: admin
+#      username: admin
+#      password: admin
   kafka:
     producer:
       bootstrap-servers: localhost:9092
