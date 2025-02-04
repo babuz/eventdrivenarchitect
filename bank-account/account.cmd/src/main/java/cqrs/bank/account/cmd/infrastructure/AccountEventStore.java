@@ -63,4 +63,9 @@ public class AccountEventStore implements EventStore {
         }
         return existingEvents.stream().map(EventModel::getEventData).toList();
     }
+
+    @Override
+    public List<EventModel> getAllEvents() {
+        return eventStoreRepository.findAll();
+    }
 }
