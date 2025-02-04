@@ -42,6 +42,7 @@ public class AccountEventStore implements EventStore {
                     .timeStamp(new Date())
                     .aggregateIdentifier(aggregateId)
                     .aggregateType(AccountAggregate.class.getTypeName())
+                    .version(version)
                     .build();
 
             EventModel persistedEvent = eventStoreRepository.save(eventModel);

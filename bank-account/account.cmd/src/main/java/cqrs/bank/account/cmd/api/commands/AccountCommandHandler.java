@@ -5,6 +5,8 @@ import cqrs.bank.account.cmd.infrastructure.AccountEventSourcingHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.MessageFormat;
+
 @Service
 public class AccountCommandHandler implements CommandHandler {
 
@@ -39,6 +41,10 @@ public class AccountCommandHandler implements CommandHandler {
     @Override
     public void handle(WithdrawFundCommand command) {
         var aggregate = eventSourcingHandler.getById(command.getId());
+        if(aggregate.getBalance() < command.getAmount()){
+            String formattedMessage = MessageFormat.format("Insufficient balance for the account id {0} existing balance {1} and requested withdraw amount {2}", command.getId(), aggregate.getBalance(), command.getAmount());
+            throw new IllegalStateException(formattedMessage);
+        }
         aggregate.withdrawFund(command.getAmount());
         eventSourcingHandler.save(aggregate);
     }
