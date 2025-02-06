@@ -4,6 +4,21 @@ run the docker to
 docker run -it -d --name mysql-container -p 3306:3306 --network techbankNet -e MYSQL_ROOT_PASSWORD=techbankRootPsw --restart always -v mysql_data_container:/var/lib/mysql mysql:latest
 
 command to connect mysql
-mysqlsh --uri user@localhost:3306 --user root mysqlsh --uri user@localhost:3306 --user root
+mysqlsh --uri user@localhost:3306 --user root --password techbankRootPsw
+mysqlsh --uri user@localhost:3306 --user root --password techbankRootPsw
+url: jdbc:mysql://localhost:3306/bankAccount?createDatabaseIfNotExist=true
+mysqlsh: root with no password
+
+\connect root@localhost:3306
 
 password; techbankRootPsw
+
+Mysqlsh command - My SQL Shell commands
+
+Show databases;
+
+USE bankAccount;
+
+show tables;
+
+select * from bank_account
